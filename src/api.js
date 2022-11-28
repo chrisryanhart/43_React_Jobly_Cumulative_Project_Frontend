@@ -43,7 +43,55 @@ class JoblyApi {
     return res.company;
   }
 
-  // obviously, you'll add a lot here ...
+    /** Gets list of all companies  */
+
+  static async getAllCompanies() {
+    let res = await this.request(`companies`);
+    return res.companies;
+  }
+
+  /** Get specific detail of a job  */
+
+  static async getJob(id) {
+    let res = await this.request(`jobs/${id}`);
+    return res.job;
+  }
+
+    /** Get list of all jobs  */
+
+    static async getAllJobs() {
+      let res = await this.request(`jobs`);
+      return res.jobs;
+    }
+
+    /** Get details of a user  */
+
+    static async getUser(username) {
+      let res = await this.request(`users/${username}`);
+      return res.user;
+    }
+
+    /** POST new user  */
+
+    static async createUser(userData) {
+      let res = await this.request(`auth/register`,userData,'post');
+      return res.token;
+    }
+
+    /** POST user login  */
+
+    static async authenticateUser(credentials) {
+      let res = await this.request(`auth/token`,credentials,'post');
+      return res.token;
+    }
+
+    /** POST job application  */
+
+    static async apply(username,id) {
+      let res = await this.request(`users/${username}/${id}`);
+      return res.applied;
+    }
+
 }
 
 // for now, put token ("testuser" / "password" on class)
