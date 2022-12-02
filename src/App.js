@@ -1,30 +1,98 @@
 import React, { useState, useEffect } from 'react';
-import CountContext from "./countContext"
+import UserContext from "./UserContext"
 import './App.css';
 import NavBar from './NavBar';
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, useHistory } from "react-router-dom";
 import Routes from './Routes';
+import JoblyApi from "./api"
+
 
 function App() {
   // you know someone is logged in if you have a token
-  const [token, setToken] = useState('');
+  const INITIAL_AUTH_STATE = {token: '', username: ''};
+  const [authCredentials, setAuthCredentials] = useState(INITIAL_AUTH_STATE);
+  const [currentUser, setCurrentUser] = useState({});
 
-  useEffect(function loadToken(){
-    // change navbar view if token changes 
-  },[token]);
+  // const history = useHistory();
+
+  useEffect(function loadUserDetails(){
+    // update the currentUser when the token changes
+    async function fetchUserDetails(){
+
+      // need username to call
+      let res = await JoblyApi.getUser(authCredentials.username);
+      setCurrentUser(res);
+    }
+
+    fetchUserDetails();
+  },[authCredentials]);
 
   // update if any change to the token
   // update happens with either login or register
 
+  // add login function for the api call
+
+  const logout = () => {
+    setAuthCredentials(INITIAL_AUTH_STATE);
+    setCurrentUser([]);
+
+  }
+
+  const login = async (credentials) => {
+    // gather login credentials
+    // call api
+    // console.log('token before login: ',JoblyApi.token);
+    let res = await JoblyApi.authenticateUser(credentials);
+
+    // const loggedInCredentials = {username: credentials.username, token: res}
+
+    // if not error, setToken
+    setAuthCredentials({...authCredentials, username: credentials.username, token: res});
+
+    // consider error handling
+    // if(res) setCurrentUser(credentials.username);
+    // history.push('/');
+    // update token in state
+    // update token on api class
+    // redirect with history
+  }
+
+  const signup = async (newProfileData) => {
+
+    console.log(newProfileData);
+
+    // call register api
+    let res = await JoblyApi.createUser(newProfileData);
+
+    // const loggedInCredentials = {username: newProfileData.username, token: res}
+
+    setAuthCredentials({...authCredentials, username: newProfileData.username, token: res});
+
+    // consider error handling
+    if(res) setCurrentUser(newProfileData.username);
+
+    // history.push('/');
+        // redirect with history
+
+  }
+
+
+
+  // logout function will remove the token value from the state
+
+  // useContext can only handle a single object; multiple variables can be stored here
+  JoblyApi.token = authCredentials.token;
+
+  // console.log('token: ', JoblyApi.token);
   return (
     <div className="App">
       {/* <Routes/> */}
-      <CountContext.Provider value={token}>
+      <UserContext.Provider value={{authCredentials, login, logout, signup, currentUser}}>
         <BrowserRouter>
           <NavBar />
           <Routes />
         </BrowserRouter>
-      </CountContext.Provider>
+      </UserContext.Provider>
     </div>
   );
 }

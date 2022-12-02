@@ -1,17 +1,22 @@
 import React, { useContext } from "react";
-import CountContext from "./countContext";
+import UserContext from "./UserContext";
 import { NavLink } from "react-router-dom";
 import { Nav, Navbar, NavItem } from "reactstrap";
 import './NavBar.css'
 
 function NavBar(){
-    const token = useContext(CountContext);
+    const { authCredentials, logout, currentUser } = useContext(UserContext);
     // if token = empty string, 
     // where to control the Navbar components, useEffect?
 
 // if logged out (no token), return alternate links
 
 // if logged in (token present), return the below
+    const handleClick = () => { 
+        // console.log('token: ', token);
+        logout();
+    }
+
 
     return (
         <div>
@@ -30,17 +35,17 @@ function NavBar(){
                     <NavItem>
                         <NavLink exact to="/jobs">Jobs</NavLink>
                     </NavItem>
-                    <NavItem>
-                        <NavLink exact to="/profile">Profile</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink exact to="/login">Login/Signup</NavLink>
-                    </NavItem>
-                    <NavItem>
+                    {authCredentials.username && <NavItem>
+                        <NavLink exact to="/profile">{`${authCredentials.username}'s `}Profile</NavLink>
+                    </NavItem>}
+                    {!authCredentials.username && <NavItem>
+                        <NavLink exact to="/login">Login</NavLink>
+                    </NavItem>}
+                    {!authCredentials.username && <NavItem>
                         <NavLink exact to="/signup">Signup</NavLink>
-                    </NavItem>
+                    </NavItem>}
                     <NavItem>
-                        <NavLink exact to="/">Logout</NavLink>
+                        <NavLink onClick={handleClick} exact to="/">Logout</NavLink>
                     </NavItem>
                 </Nav>
             </Navbar>

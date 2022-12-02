@@ -10,7 +10,6 @@ import CompanyDetail from "./CompanyDetail";
 
 function Routes(){
 
-
     return (
         // <div>
         //     <p>Test</p>
