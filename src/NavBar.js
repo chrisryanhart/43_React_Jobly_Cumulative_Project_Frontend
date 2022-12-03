@@ -6,6 +6,8 @@ import './NavBar.css'
 
 function NavBar(){
     const { authCredentials, logout, currentUser } = useContext(UserContext);
+
+    // const newAuthCredentials = JSON.parse(localStorage.getItem('authCredentials'));
     // if token = empty string, 
     // where to control the Navbar components, useEffect?
 
@@ -30,18 +32,18 @@ function NavBar(){
                         <NavLink exact to="/companies">Companies</NavLink>
                     </NavItem>
                     <NavItem>
-                        <NavLink exact to="/companies/:handle">Company Detail</NavLink>
+                        <NavLink exact to="/companies/watson-davis">Company Detail</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink exact to="/jobs">Jobs</NavLink>
                     </NavItem>
-                    {authCredentials.username && <NavItem>
+                    {authCredentials.token && <NavItem>
                         <NavLink exact to="/profile">{`${authCredentials.username}'s `}Profile</NavLink>
                     </NavItem>}
-                    {!authCredentials.username && <NavItem>
+                    {!authCredentials.token && <NavItem>
                         <NavLink exact to="/login">Login</NavLink>
                     </NavItem>}
-                    {!authCredentials.username && <NavItem>
+                    {!authCredentials.token && <NavItem>
                         <NavLink exact to="/signup">Signup</NavLink>
                     </NavItem>}
                     <NavItem>

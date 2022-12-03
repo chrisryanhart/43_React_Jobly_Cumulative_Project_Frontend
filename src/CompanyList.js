@@ -1,11 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import JoblyApi from "./api";
 import CompanyCard from "./CompanyCard";
 import SearchForm from "./SearchForm";
+import UserContext from "./UserContext"
+import { useHistory } from "react-router-dom";
 
 function CompanyList(){
+    const history = useHistory();
+    const { authCredentials } = useContext(UserContext);
+
+    if(!authCredentials.token){
+        history.push('/login');
+    }
     // add state for companies
     const [companies, setCompanies] = useState([]);
+
 
     useEffect(function getCompaniesWhenMounted(){
         async function getCompanies(){

@@ -1,9 +1,19 @@
-import React, { useEffect,useState } from "react";
+import React, { useEffect,useState, useContext } from "react";
 import JobCardList from "./JobCardList";
 import SearchForm from "./SearchForm";
 import JoblyApi from "./api";
+import UserContext from "./UserContext"
+import { useHistory } from "react-router-dom";
 
 function JobList(){
+    const history = useHistory();
+
+    const { authCredentials } = useContext(UserContext);
+
+    if(!authCredentials.token){
+        history.push('/login');
+    }
+
     const [jobs,setJobs] = useState([]);
 
     useEffect(function loadJobs(){

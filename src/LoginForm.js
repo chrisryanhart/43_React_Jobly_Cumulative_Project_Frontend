@@ -22,6 +22,7 @@ function LoginForm({}){
         await login(loginFormData);
         setLoginFormData(INITIAL_STATE);
         history.push('/');
+
     }
 
 
