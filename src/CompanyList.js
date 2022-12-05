@@ -36,6 +36,7 @@ function CompanyList(){
 
     const companiesList = companies.map(ele => {
         return (<CompanyCard 
+            handle={ele.handle}
             name={`${ele.name}`} 
             description={`${ele.description}`} 
             logoUrl={`${ele.logoUrl}`} 

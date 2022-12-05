@@ -27,12 +27,9 @@ function NavBar(){
                     Jobly
                 </NavLink>
 
-                <Nav className="ml-auto" navbar>
+                <Nav className="navbar-nav ml-auto" navbar>
                     <NavItem>
                         <NavLink exact to="/companies">Companies</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink exact to="/companies/watson-davis">Company Detail</NavLink>
                     </NavItem>
                     <NavItem>
                         <NavLink exact to="/jobs">Jobs</NavLink>

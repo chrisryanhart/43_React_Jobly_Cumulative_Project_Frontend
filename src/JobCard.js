@@ -1,9 +1,20 @@
-import React from "react";
-import { Card, CardBody, CardText, CardTitle } from "reactstrap"
+import React, { useContext } from "react";
+import UserContext from "./UserContext";
+import { Card, CardBody, CardText, CardTitle } from "reactstrap";
+import './JobCard.css';
 
-function JobCard({title, salary, equity}){
+function JobCard({id, title, salary, equity, hasApplied}){
+    const { currentUser, applyToJob } = useContext(UserContext);
 
-        // if user has applied, change button to 'applied'
+    // onclick add job to currentUser's profile
+
+    // make api call to backend 
+
+    const handleClick = () => {
+
+        applyToJob(currentUser.username, id)
+    }
+
 
     return (
         <Card
@@ -16,14 +27,13 @@ function JobCard({title, salary, equity}){
                     {title}
                 </CardTitle>
                 <CardText>
-                    <div>
-                        Salary: {salary}
-                    </div>
-                    <div>
-                        Equity: {equity}
-                    </div>
-                    <button>Apply</button>
+                    Salary: {salary}
                 </CardText>
+                <CardText>
+                    Equity: {equity}
+                </CardText>
+                {hasApplied && <button className="applied">Applied</button>}
+                {!hasApplied && <button className="apply" onClick={handleClick}>Apply</button>}
             </CardBody>
         </Card>);
 }

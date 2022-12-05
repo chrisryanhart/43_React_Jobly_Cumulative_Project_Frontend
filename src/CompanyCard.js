@@ -1,12 +1,14 @@
 import React from "react";
 import { Card, CardBody, CardText, CardTitle } from "reactstrap"
+import { useHistory } from "react-router-dom";
 import logo1 from './logos/logo1.png'
 import logo2 from './logos/logo2.png'
 import logo3 from './logos/logo3.png'
 import logo4 from './logos/logo4.png'
 
 
-function CompanyCard({name,description,logoUrl}){
+function CompanyCard({handle, name,description,logoUrl}){
+    const history = useHistory();
     // const images = {'logo1': logo1, 'logo2': logo2, 'logo3': logo3, 'logo4':logo4}
 
     // if(logoUrl !== null){
@@ -22,8 +24,14 @@ function CompanyCard({name,description,logoUrl}){
 
     // console.log(logoUrl);
 
+    const handleClick = () => { 
+        history.push(`/companies/${handle}`);
+    };
+
     return (
         <Card
+            key={handle}
+            onClick={handleClick}
             style={{
             width: '18rem'
             }}

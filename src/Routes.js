@@ -36,6 +36,9 @@ function Routes(){
             <Route exact path='/companies/:handle'>
                 <CompanyDetail />
             </Route>
+            <Route>
+                <p>Couldn't find page you wanted</p>
+            </Route>
         </Switch>
     );
 }

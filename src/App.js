@@ -27,6 +27,8 @@ function App() {
     async function fetchUserDetails(){
 
       // need username to call
+      // can try and catch instead of using auth credentials
+      // don't set current user after try
       let res = await JoblyApi.getUser(authCredentials.username);
       setCurrentUser(res);
     }
@@ -114,11 +116,6 @@ function App() {
   }
 
   const editProfile = async (profileData) => {
-    // destructure other editable data
-    // separate the data to edit
-    // confirm login credentials (username, pw) 
-    // const userCredentials = [profileData.username, profileData.password];
-    // username.push(profileData.username);
 
     // call will break with error if there is no match
     let verificationRes = await JoblyApi.authenticateUser({username: profileData.username, password: profileData.password});
@@ -134,7 +131,18 @@ function App() {
 
     let userRes = await JoblyApi.getUser(profileData.username);
     setCurrentUser({...userRes});
+  }
 
+  const applyToJob = async (username, id) => {
+    // call api
+    let res = await JoblyApi.apply(username, id);
+
+    // can manually add or call database again
+    console.log(currentUser)
+    setCurrentUser(user => {
+      user.applications.push(res);
+      return {...user};
+      });
   }
 
 
@@ -149,7 +157,7 @@ function App() {
   return (
     <div className="App">
       {/* <Routes/> */}
-      <UserContext.Provider value={{authCredentials, login, logout, signup, editProfile, currentUser}}>
+      <UserContext.Provider value={{authCredentials, login, logout, signup, editProfile, currentUser, applyToJob}}>
         <BrowserRouter>
           <NavBar />
           <Routes />
