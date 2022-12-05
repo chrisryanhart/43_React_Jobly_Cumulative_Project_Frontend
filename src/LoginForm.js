@@ -8,7 +8,7 @@ function LoginForm({}){
     const history = useHistory();
     // control form state here
     // extract login() from context
-    const { login } = useContext(UserContext)
+    const { login } = useContext(UserContext);
 
     // if logged out, show login/sign up links
     const handleChange = (e) => {

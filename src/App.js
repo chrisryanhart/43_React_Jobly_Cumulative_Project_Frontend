@@ -113,6 +113,32 @@ function App() {
 
   }
 
+  const editProfile = async (profileData) => {
+    // destructure other editable data
+    // separate the data to edit
+    // confirm login credentials (username, pw) 
+    // const userCredentials = [profileData.username, profileData.password];
+    // username.push(profileData.username);
+
+    const dataToEdit = {...profileData};
+    const username = [];
+    const password = [];
+
+    username.push(profileData.username);
+    password.push(profileData.password);
+
+    delete dataToEdit.username;
+    delete dataToEdit.password;
+
+    console.log('test');
+    let res = await JoblyApi.editProfile(username[0], dataToEdit);
+
+    // don't want to override token
+    console.log('test');
+    let userRes = await JoblyApi.getUser(username[0]);
+    setCurrentUser({...userRes});
+
+  }
 
 
   // logout function will remove the token value from the state
@@ -126,7 +152,7 @@ function App() {
   return (
     <div className="App">
       {/* <Routes/> */}
-      <UserContext.Provider value={{authCredentials, login, logout, signup, currentUser}}>
+      <UserContext.Provider value={{authCredentials, login, logout, signup, editProfile, currentUser}}>
         <BrowserRouter>
           <NavBar />
           <Routes />

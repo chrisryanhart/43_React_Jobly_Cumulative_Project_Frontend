@@ -78,6 +78,12 @@ class JoblyApi {
       return res.token;
     }
 
+    /** PATCH existing user  */
+    static async editProfile(username,editData) {
+      let res = await this.request(`users/${username}`,editData,'patch');
+      return res.user;
+    }
+
     /** POST user login  */
 
     static async authenticateUser(credentials) {
@@ -91,6 +97,7 @@ class JoblyApi {
       let res = await this.request(`users/${username}/${id}`);
       return res.applied;
     }
+
 
 }
 
