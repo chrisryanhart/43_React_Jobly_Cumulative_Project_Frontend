@@ -120,22 +120,19 @@ function App() {
     // const userCredentials = [profileData.username, profileData.password];
     // username.push(profileData.username);
 
-    const dataToEdit = {...profileData};
-    const username = [];
-    const password = [];
+    // call will break with error if there is no match
+    let verificationRes = await JoblyApi.authenticateUser({username: profileData.username, password: profileData.password});
 
-    username.push(profileData.username);
-    password.push(profileData.password);
+    if(!verificationRes) throw Error;
+
+    const dataToEdit = {...profileData};
 
     delete dataToEdit.username;
     delete dataToEdit.password;
 
-    console.log('test');
-    let res = await JoblyApi.editProfile(username[0], dataToEdit);
+    let res = await JoblyApi.editProfile(profileData.username, dataToEdit);
 
-    // don't want to override token
-    console.log('test');
-    let userRes = await JoblyApi.getUser(username[0]);
+    let userRes = await JoblyApi.getUser(profileData.username);
     setCurrentUser({...userRes});
 
   }
