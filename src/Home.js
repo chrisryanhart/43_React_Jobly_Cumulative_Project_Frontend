@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import UserContext from "./UserContext"
 
 function Home(){
@@ -20,7 +20,6 @@ function Home(){
             </div>
         );
     }
-
 }
 
 export default Home;

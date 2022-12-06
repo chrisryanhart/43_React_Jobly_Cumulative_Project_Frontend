@@ -5,9 +5,7 @@ import UserContext from "./UserContext";
 function EditProfileForm(){
 
     const { editProfile, currentUser } = useContext(UserContext);
-
-    // if logged out, show login/sign up links
-    
+ 
     // retrieve current profile data from context
     const INITIAL_STATE = {
         username: currentUser.username, 
@@ -18,9 +16,6 @@ function EditProfileForm(){
     };
 
     const [profileFormData, setProfileFormData] = useState(INITIAL_STATE);
-    // control form state here
-    // extract login() from context
-    
 
     const history = useHistory();
 
@@ -31,10 +26,9 @@ function EditProfileForm(){
         setProfileFormData({...profileFormData, [name]: val});
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        // change to editProfile()
-        await editProfile(profileFormData);
+        editProfile(profileFormData);
         setProfileFormData(INITIAL_STATE);
         history.push('/');
     }

@@ -12,18 +12,21 @@ function CompanyList(){
     if(!authCredentials.token){
         history.push('/login');
     }
-    // add state for companies
+
     const [companies, setCompanies] = useState([]);
 
-
     useEffect(function getCompaniesWhenMounted(){
-        async function getCompanies(){
-            const res = await JoblyApi.getAllCompanies();
-            setCompanies([...res]);
+        try {
+            async function getCompanies(){
+                const res = await JoblyApi.getAllCompanies();
+                setCompanies([...res]);
+            }
+            getCompanies();
+        } catch(err){
+            console.error('couldnt load companies list', err);
         }
-        getCompanies();
-    },[]);
 
+    },[]);
 
 
     const extractSearchInput = async (searchInput) => {

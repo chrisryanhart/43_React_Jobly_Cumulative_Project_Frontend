@@ -12,28 +12,23 @@ function SignUpForm(){
     };
 
     const [signupFormData, setSignupFormData] = useState(INITIAL_STATE);
-    // control form state here
-    // extract login() from context
     const { signup } = useContext(UserContext);
 
     const history = useHistory();
 
-    // if logged out, show login/sign up links
     const handleChange = (e) => {
         const val = e.target.value;
         const name = e.target.name;
         setSignupFormData({...signupFormData, [name]: val});
     }
 
-    const handleSubmit = async (e) => {
+
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await signup(signupFormData);
+        signup(signupFormData);
         setSignupFormData(INITIAL_STATE);
         history.push('/');
     }
-
-    // if logged out, show login/sign up links
-
 
     return (
         <form onSubmit={handleSubmit}>

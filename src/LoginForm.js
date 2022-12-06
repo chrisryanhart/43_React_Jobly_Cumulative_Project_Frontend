@@ -2,29 +2,26 @@ import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import UserContext from "./UserContext"
 
-function LoginForm({}){
-    const INITIAL_STATE = {username: 'testuser', password: 'password'};
+function LoginForm(){
+    const INITIAL_STATE = {username: '', password: ''};
     const [loginFormData, setLoginFormData] = useState(INITIAL_STATE);
     const history = useHistory();
-    // control form state here
-    // extract login() from context
+
     const { login } = useContext(UserContext);
 
-    // if logged out, show login/sign up links
     const handleChange = (e) => {
         const val = e.target.value;
         const name = e.target.name;
         setLoginFormData({...loginFormData, [name]: val});
     }
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();
-        await login(loginFormData);
+        login(loginFormData);
         setLoginFormData(INITIAL_STATE);
         history.push('/');
 
     }
-
 
     return (
         <form onSubmit={handleSubmit}>

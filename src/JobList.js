@@ -17,11 +17,16 @@ function JobList(){
     const [jobs,setJobs] = useState([]);
 
     useEffect(function loadJobs(){
-        async function fetchJobs(){
-            let res = await JoblyApi.getAllJobs();
-            setJobs([...res]);
+        try {
+            async function fetchJobs(){
+                let res = await JoblyApi.getAllJobs();
+                setJobs([...res]);
+            }
+            fetchJobs();
+        } catch (err) {
+            console.error('couldnt load jobs', err);
         }
-        fetchJobs();
+
     },[]);
 
     if (jobs.length === 0) {
@@ -30,16 +35,20 @@ function JobList(){
         );
     }
 
-    // add searchFor function
     const extractSearchInput = async (searchInput) => {
-        if (searchInput.value === '') {
-            let res = await JoblyApi.getAllJobs();
-            setJobs([...res])
-        } else {
-            let jobTitle = {'title': searchInput.value};
-            let res = await JoblyApi.getAllJobs(jobTitle);
-            setJobs([...res]);
-        }  
+        try {
+            if (searchInput.value === '') {
+                let res = await JoblyApi.getAllJobs();
+                setJobs([...res])
+            } else {
+                let jobTitle = {'title': searchInput.value};
+                let res = await JoblyApi.getAllJobs(jobTitle);
+                setJobs([...res]);
+            } 
+        } catch(err){
+            console.error('couldnt extract form output', err);
+        }
+ 
     };
 
     return (

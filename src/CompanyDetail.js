@@ -7,31 +7,28 @@ import { useHistory } from "react-router-dom";
 
 function CompanyDetail(){
     const history = useHistory();
-
     const { authCredentials } = useContext(UserContext);
+    const [company, setCompany] = useState([]);
+    const { handle } = useParams();
 
     if(!authCredentials.token){
         history.push('/login');
     }
-    // if logged out, show login/sign up links
-    const [company, setCompany] = useState([]);
-    // const pageLoading = {'status': true};
-
-    const { handle } = useParams();
 
     useEffect(function loadCompany(){
-        async function fetchCompany(){
-            // use try/catch for error
-            console.log('test');
-            let res = await JoblyApi.getCompany(handle);
-            setCompany([res]);
+        try { 
+            async function fetchCompany(){
+                let res = await JoblyApi.getCompany(handle);
+                setCompany([res]);
+            }
+            fetchCompany()
+        } catch (err) {
+            console.error('Couldnt log load company', err);
         }
-        fetchCompany()
+
     },[handle]);
 
-    // if no errors as well
-    // have catch display error message as well
-    // company length won't be updated
+    // if no companies loaded, show loader
     if (company.length === 0) {
         return (
             <div>...Page loading</div>

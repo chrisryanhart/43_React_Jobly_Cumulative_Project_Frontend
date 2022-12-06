@@ -1,14 +1,12 @@
-import e from "cors";
 import React, { useState } from "react";
 
 function SearchForm({extractSearchInput}){
     const INITIAL_STATE = {'value': ''};
     const [searchFormData, setSearchFormData] = useState(INITIAL_STATE);
-    // if logged out, show login/sign up links
+
     const handleChange = (e) => {
         const searchInput = e.target.value;
         setSearchFormData({'value': searchInput});
-
     }
 
     const handleSubmit = (e) => {
@@ -17,8 +15,7 @@ function SearchForm({extractSearchInput}){
         setSearchFormData(INITIAL_STATE);
     }
 
-    console.log(searchFormData);
-    
+   
     return (
         <form onSubmit={handleSubmit}>
             <input 

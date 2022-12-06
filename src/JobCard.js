@@ -6,15 +6,9 @@ import './JobCard.css';
 function JobCard({id, title, salary, equity, hasApplied}){
     const { currentUser, applyToJob } = useContext(UserContext);
 
-    // onclick add job to currentUser's profile
-
-    // make api call to backend 
-
     const handleClick = () => {
-
         applyToJob(currentUser.username, id)
     }
-
 
     return (
         <Card
