@@ -11,9 +11,6 @@ import CompanyDetail from "./CompanyDetail";
 function Routes(){
 
     return (
-        // <div>
-        //     <p>Test</p>
-        // </div>
         <Switch>
             <Route exact path='/'>
                 <Home />
