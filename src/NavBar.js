@@ -1,10 +1,14 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import UserContext from "./UserContext";
 import { NavLink } from "react-router-dom";
-import { Nav, Navbar, NavItem } from "reactstrap";
+import { Nav, Navbar, NavItem, Collapse, NavbarToggler } from "reactstrap";
 import './NavBar.css'
 
 function NavBar(){
+    const [isOpen, setIsOpen] = useState(false);
+
+    const toggle = () => setIsOpen(!isOpen);
+
     const { authCredentials, logout, currentUser } = useContext(UserContext);
 
     // const newAuthCredentials = JSON.parse(localStorage.getItem('authCredentials'));
@@ -19,34 +23,37 @@ function NavBar(){
         logout();
     }
 
-
     return (
         <div>
-            <Navbar expand="md">
+            {/* they used nav here */}
+            <Navbar className="navbar navbar-dark bg-dark">
                 <NavLink exact to="/" className="navbar-brand">
                     Jobly
                 </NavLink>
 
-                <Nav className="navbar-nav ml-auto" navbar>
-                    <NavItem>
-                        <NavLink exact to="/companies">Companies</NavLink>
-                    </NavItem>
-                    <NavItem>
-                        <NavLink exact to="/jobs">Jobs</NavLink>
-                    </NavItem>
-                    {authCredentials.token && <NavItem>
-                        <NavLink exact to="/profile">{`${authCredentials.username}'s `}Profile</NavLink>
-                    </NavItem>}
-                    {!authCredentials.token && <NavItem>
-                        <NavLink exact to="/login">Login</NavLink>
-                    </NavItem>}
-                    {!authCredentials.token && <NavItem>
-                        <NavLink exact to="/signup">Signup</NavLink>
-                    </NavItem>}
-                    <NavItem>
-                        <NavLink onClick={handleClick} exact to="/">Logout</NavLink>
-                    </NavItem>
-                </Nav>
+                <NavbarToggler onClick={toggle}  className="navbar-toggler ml-auto"/>
+                <Collapse isOpen={isOpen} navbar>
+                    <Nav navbar>
+                        <NavItem>
+                            <NavLink exact to="/companies">Companies</NavLink>
+                        </NavItem>
+                        <NavItem>
+                            <NavLink exact to="/jobs">Jobs</NavLink>
+                        </NavItem>
+                        {authCredentials.token && <NavItem>
+                            <NavLink exact to="/profile">{`${authCredentials.username}'s `}Profile</NavLink>
+                        </NavItem>}
+                        {!authCredentials.token && <NavItem>
+                            <NavLink exact to="/login">Login</NavLink>
+                        </NavItem>}
+                        {!authCredentials.token && <NavItem>
+                            <NavLink exact to="/signup">Signup</NavLink>
+                        </NavItem>}
+                        {authCredentials.token && <NavItem>
+                            <NavLink onClick={handleClick} exact to="/">Logout</NavLink>
+                        </NavItem>}
+                    </Nav>
+                </Collapse>
             </Navbar>
             {/* <nav>
                 <ul>
@@ -62,6 +69,29 @@ function NavBar(){
 
     );
 }
+
+
+{/* <Nav className="navbar-nav ml-auto" >
+<NavItem>
+    <NavLink exact to="/companies">Companies</NavLink>
+</NavItem>
+<NavItem>
+    <NavLink exact to="/jobs">Jobs</NavLink>
+</NavItem>
+{authCredentials.token && <NavItem>
+    <NavLink exact to="/profile">{`${authCredentials.username}'s `}Profile</NavLink>
+</NavItem>}
+{!authCredentials.token && <NavItem>
+    <NavLink exact to="/login">Login</NavLink>
+</NavItem>}
+{!authCredentials.token && <NavItem>
+    <NavLink exact to="/signup">Signup</NavLink>
+</NavItem>}
+<NavItem>
+    <NavLink onClick={handleClick} exact to="/">Logout</NavLink>
+</NavItem>
+</Nav>
+</Navbar> */}
 
 
 export default NavBar;
